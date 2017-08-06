@@ -1,13 +1,13 @@
-const { Menu, shell } = require('electron');
+const { Menu, shell, dialog } = require('electron');
 
-export function getMenu(mainWindow) {
+export function getMenu(mainWindow, version) {
   if (process.platform === 'darwin') {
-    return getDarwinMenu(mainWindow);
+    return getDarwinMenu(mainWindow, version);
   }
-  return getDefaultMenu(mainWindow);
+  return getDefaultMenu(mainWindow, version);
 }
 
-function getDefaultMenu(mainWindow) {
+function getDefaultMenu(mainWindow, version) {
   const template = [
     {
       label: '&File',
@@ -72,12 +72,27 @@ function getDefaultMenu(mainWindow) {
         click() {
           shell.openExternal('https://github.com/atom/electron/issues');
         }
+      }, {
+        label: 'Version',
+        click() {
+          dialog.showMessageBox(mainWindow, { message: `Version: ${version}` });
+        }
       }]
     }];
   return Menu.buildFromTemplate(template);
 }
 
-function getDarwinMenu(mainWindow) {
-  const template = [];
+function getDarwinMenu(mainWindow, version) {
+  const template = [
+    {
+      label: 'Help',
+      submenu: [{
+        label: 'Version',
+        click() {
+          dialog.showMessageBox(mainWindow, { message: `Version: ${version}` });
+        }
+      }]
+    }
+  ];
   return Menu.buildFromTemplate(template);
 }

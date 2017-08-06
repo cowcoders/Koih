@@ -1,7 +1,7 @@
 import Database from "./desktop/Database";
 import Config from "./desktop/Config";
 import { getMenu } from "./desktop/utils/menu"
-import pkg from './package.json';
+import pkg from '../package.json';
 import IPCEvents from "./desktop/IPCEvents";
 import { initAutoUpdater, checkForUpdates } from './desktop/utils/autoupdater';
 
@@ -9,14 +9,14 @@ const { app, BrowserWindow, Menu } = require('electron');
 
 let mainWindow = null;
 
-const config = new Config(app);
+const config = new Config(app, pkg);
 const database = new Database(config);
 new IPCEvents(database, config);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
-  initAutoUpdater(mainWindow, pkg.version);
+  initAutoUpdater(mainWindow, config.version);
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -76,7 +76,7 @@ function onReady() {
   });
   mainWindow.on('closed', () => mainWindow = null);
   devTools();
-  Menu.setApplicationMenu(getMenu(mainWindow));
+  Menu.setApplicationMenu(getMenu(mainWindow, config.version));
 }
 
 app.on('ready', () => installExtensions().then(() => onReady()));
