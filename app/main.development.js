@@ -7,7 +7,7 @@ import { initAutoUpdater, checkForUpdates } from './desktop/utils/autoupdater';
 
 const { app, BrowserWindow, Menu } = require('electron');
 
-let mainWindow: Electron.BrowserWindow = null;
+let mainWindow = null;
 
 const config = new Config(app);
 const database = new Database(config);
