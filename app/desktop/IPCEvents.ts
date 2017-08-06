@@ -5,8 +5,8 @@ import IPCConstants from "../utils/IPCConstants";
 
 function getInstances(event, database) {
   database.instances.findAll()
-    .then(data => event.sender.send(IPCConstants.GET_INSTANCES(true), data))
-    .catch(err => event.sender.send(IPCConstants.GET_INSTANCES(true), null, err));
+    .then(data => event.sender.send(IPCConstants.GET_INSTANCES(true), null, data))
+    .catch(err => event.sender.send(IPCConstants.GET_INSTANCES(true), err));
 }
 
 export default class IPCEvents {

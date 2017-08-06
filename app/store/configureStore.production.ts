@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import rootReducer from '../reducers';
-import IPCClient from "../helpers/ipc/IPCClient";
+import IPCClient from "../utils/ipc/IPCClient";
 import ipcMiddleware from "./middleware/ipc";
 
 const history = createBrowserHistory();

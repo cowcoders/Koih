@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
 import * as counterActions from '../actions/counter';
-import IPCClient from "../helpers/ipc/IPCClient";
+import IPCClient from "../utils/ipc/IPCClient";
 import ipcMiddleware from "./middleware/ipc";
 
 declare const window: Window & {

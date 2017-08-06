@@ -3,13 +3,16 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './containers/Root';
 import './app.global.scss';
+import IPCClient from "./utils/ipc/IPCClient";
+
+const ipcClient = new IPCClient();
 
 const { configureStore, history } = require('./store/configureStore');
-const store = configureStore();
+const store = configureStore(ipcClient);
 
 render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <Root store={store} history={history}/>
   </AppContainer>,
   document.getElementById('root')
 );
@@ -19,7 +22,7 @@ if ((module as any).hot) {
     const NextRoot = require('./containers/Root').default;
     render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <NextRoot store={store} history={history}/>
       </AppContainer>,
       document.getElementById('root')
     );

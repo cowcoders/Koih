@@ -29,7 +29,6 @@ class InstanceList extends React.Component<IProperties, IState> {
   // }
 
   test() {
-    console.log('HELP');
     this.props.loadInstances();
   }
 

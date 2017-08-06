@@ -1,6 +1,7 @@
 import Database from "./desktop/Database";
 import Config from "./desktop/Config";
 import { getMenu } from "./desktop/utils/menu"
+import IPCEvents from "./desktop/IPCEvents";
 
 const { app, BrowserWindow, Menu, shell } = require('electron');
 
@@ -8,6 +9,7 @@ let mainWindow = null;
 
 const config = new Config(app);
 const database = new Database(config);
+new IPCEvents(database, config);
 
 
 if (process.env.NODE_ENV === 'production') {
