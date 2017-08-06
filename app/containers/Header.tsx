@@ -9,7 +9,7 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <Toolbar title="epp">
+      <Toolbar title="Koih">
         <Actionbar>
           <ButtonGroup>
             <Button onClick={this.selectItem} glyph="home"/>

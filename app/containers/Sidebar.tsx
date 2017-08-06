@@ -16,33 +16,16 @@ class Sidebar extends React.Component<any, any> {
 
   onSelect(index) {
     console.log(`sidebar clicked with ${index}`);
-    switch (index) {
-      case 0:
-        this.props.history.push('/');
-        break;
-      case 1:
-        this.props.history.push('/instance-list');
-        break;
-      case 2:
-        this.props.history.push('/');
-        break;
-      case 3:
-        this.props.history.push('/');
-        break;
-      default:
-      //throw new Error(`Unexpected index ${index}`);
-    }
+    this.props.history.push(index);
   }
 
   render() {
     return (
       <Pane ptSize="sm" sidebar>
-        <NavGroup activeKey={0} onSelect={this.onSelect}>
-          <NavTitle>nav group icon &amp; text</NavTitle>
-          <NavGroupItem eventKey={0} glyph="home" text="Home"/>
-          <NavGroupItem eventKey={1} glyph="monitor" text="Instances"/>
-          <NavGroupItem eventKey={2} glyph="user" text="Profiles"/>
-          <NavGroupItem eventKey={3} glyph="key" text="Keys"/>
+        <NavGroup activeKey="/" onSelect={this.onSelect}>
+          <NavTitle>Elements</NavTitle>
+          <NavGroupItem eventKey="/" glyph="home" text="Home"/>
+          <NavGroupItem eventKey="/instance-list" glyph="monitor" text="Instances"/>
         </NavGroup>
       </Pane>
     );

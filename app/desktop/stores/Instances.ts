@@ -18,7 +18,6 @@ export default class Instances {
   }
 
   insert(instance: InstanceModel) {
-    console.log('AAA');
     return new Promise((resolve, reject) => {
       this.dataStore.insert(instance, (err, data) => {
         if (err) reject(err);
