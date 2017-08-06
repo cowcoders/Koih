@@ -48,6 +48,7 @@
     "publish": "npm run build --win --mac --publish"
   },
   "dependencies": {
+    "aws-sdk": "^2.94.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",

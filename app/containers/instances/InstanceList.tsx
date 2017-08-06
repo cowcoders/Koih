@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import { Button } from "react-photonkit";
+import { Button, Actionbar, ButtonGroup } from "react-photonkit";
+import { withRouter } from 'react-router-dom';
 
 import { loadInstances, newInstance } from '../../actions/instance';
 import InstanceModel from "../../models/InstanceModel";
@@ -12,7 +13,8 @@ interface IProperties {
   newInstance: (instance: InstanceModel) => void,
   isLoading: boolean,
   hasErrored: boolean,
-  instances: [InstanceModel]
+  instances: [InstanceModel],
+  history: any
 }
 
 interface IState {
@@ -24,6 +26,7 @@ class InstanceList extends React.Component<IProperties, IState> {
   constructor() {
     super();
     this.test = this.test.bind(this);
+    this.goToSearchInstances = this.goToSearchInstances.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +38,10 @@ class InstanceList extends React.Component<IProperties, IState> {
     instance.id = 1;
     instance.name = 'dummyInstnace';
     this.props.newInstance(instance);
+  }
+
+  goToSearchInstances() {
+    this.props.history.push('/instance-search');
   }
 
   render() {
@@ -49,6 +56,11 @@ class InstanceList extends React.Component<IProperties, IState> {
 
     return (
       <div>
+        <Actionbar>
+          <ButtonGroup>
+            <Button onClick={this.goToSearchInstances} glyph="search"/>
+          </ButtonGroup>
+        </Actionbar>
         <Button onClick={this.test} glyph="plus"/>
         <table className={styles.tableStriped}>
           <thead>
@@ -93,4 +105,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect<IState, IProperties, {}>(mapStateToProps, mapDispatchToProps)(InstanceList);
+const InstanceListConnected: any = connect<IState, IProperties, {}>(mapStateToProps, mapDispatchToProps)(InstanceList);
+
+export default withRouter(InstanceListConnected);
