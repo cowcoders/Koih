@@ -1,12 +1,12 @@
-import * as DataStore from 'nedb';
 import { join } from 'path';
 import Config from "./Config";
+import Instances from "./stores/Instances";
 
 export default class Database {
-  instancesDS: DataStore;
+  public instances: Instances;
 
   constructor(config: Config) {
     console.log(`Databases... ${join(config.userDataPath, 'misc.db')}`);
-    this.instancesDS = new DataStore({ filename: join(config.userDataPath, 'instances.db'), autoload: true });
+    this.instances = new Instances(join(config.userDataPath, 'instances.db'));
   }
 }

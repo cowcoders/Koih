@@ -6,6 +6,8 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
 import * as counterActions from '../actions/counter';
+import IPCClient from "../helpers/ipc/IPCClient";
+import ipcMiddleware from "./middleware/ipc";
 
 declare const window: Window & {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?(a: any): void;
@@ -21,13 +23,8 @@ const actionCreators = Object.assign({}, counterActions, {
   push
 });
 
-const logger = (<any>createLogger)({
-  level: 'info',
-  collapsed: true
-});
 
 const history = createHashHistory();
-const router = routerMiddleware(history);
 
 // If Redux DevTools Extension is installed use it, otherwise use Redux compose
 /* eslint-disable no-underscore-dangle */
@@ -37,14 +34,16 @@ const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPO
     actionCreators
   }) as any :
   compose;
-/* eslint-enable no-underscore-dangle */
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk, router, logger)
-);
 
 export = {
   history,
-  configureStore(initialState: Object | void) {
+  configureStore(ipcClient: IPCClient, initialState: Object | void) {
+    const router = routerMiddleware(history);
+    const logger = (<any>createLogger)({
+      level: 'info',
+      collapsed: true
+    });
+    const enhancer = composeEnhancers(applyMiddleware(ipcMiddleware(ipcClient), thunk, router, logger));
     const store = createStore(rootReducer, initialState, enhancer);
 
     if (module.hot) {
