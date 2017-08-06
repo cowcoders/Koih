@@ -44,7 +44,8 @@
     "test": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js",
     "test-all": "npm run test && npm run build && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js e2e",
-    "test-watch": "npm test -- --watch"
+    "test-watch": "npm test -- --watch",
+    "publish": "npm run build --win --mac --publish"
   },
   "dependencies": {
     "electron-debug": "^1.1.0",
@@ -152,7 +153,14 @@
         "deb",
         "AppImage"
       ]
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "cowcoders",
+        "repo": "koih"
+      }
+    ]
   },
   "devEngines": {
     "node": ">=6.x",
