@@ -3,17 +3,16 @@ import { connect } from "react-redux";
 import { Button, Actionbar, ButtonGroup } from "react-photonkit";
 import { withRouter } from 'react-router-dom';
 
-import { loadInstances, newInstance } from '../../actions/instance';
-import InstanceModel from "../../models/InstanceModel";
+import { loadProfiles } from '../../actions/profiles';
+import ProfileModel from "../../models/ProfileModel";
 
-let styles = require('./InstanceList.scss');
+let styles = require('./ProfileList.scss');
 
 interface IProperties {
-  loadInstances: () => void,
-  newInstance: (instance: InstanceModel) => void,
+  loadProfiles: () => void,
   isLoading: boolean,
   hasErrored: boolean,
-  instances: [InstanceModel],
+  profiles: [ProfileModel],
   history: any
 }
 
@@ -22,22 +21,14 @@ interface IState {
   hasErrored?: boolean
 }
 
-class InstanceList extends React.Component<IProperties, IState> {
+class ProfileList extends React.Component<IProperties, IState> {
   constructor() {
     super();
-    this.test = this.test.bind(this);
     this.goToSearchInstances = this.goToSearchInstances.bind(this);
   }
 
   componentDidMount() {
-    this.props.loadInstances();
-  }
-
-  test() {
-    const instance = new InstanceModel();
-    instance.id = 1;
-    instance.name = 'dummyInstnace';
-    this.props.newInstance(instance);
+    this.props.loadProfiles();
   }
 
   goToSearchInstances() {
@@ -45,7 +36,7 @@ class InstanceList extends React.Component<IProperties, IState> {
   }
 
   render() {
-    const { instances } = this.props;
+    const { profiles } = this.props;
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
@@ -61,7 +52,6 @@ class InstanceList extends React.Component<IProperties, IState> {
             <Button onClick={this.goToSearchInstances} glyph="search"/>
           </ButtonGroup>
         </Actionbar>
-        <Button onClick={this.test} glyph="plus"/>
         <table className={styles.tableStriped}>
           <thead>
             <tr>
@@ -71,10 +61,10 @@ class InstanceList extends React.Component<IProperties, IState> {
             </tr>
           </thead>
           <tbody>
-            {instances && instances.map(instance =>
-              <tr key={instance.id}>
-                <td>{instance.id}</td>
-                <td>{instance.name}</td>
+            {profiles && profiles.map(profile =>
+              <tr key={profile.id}>
+                <td>{profile.id}</td>
+                <td>{profile.name}</td>
               </tr>
             )}
             ...
@@ -100,11 +90,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadInstances: () => dispatch(loadInstances()),
-    newInstance: (instance: InstanceModel) => dispatch(newInstance(instance))
+    loadProfiles: () => dispatch(loadProfiles())
   };
 };
 
-const InstanceListConnected: any = connect<IState, IProperties, {}>(mapStateToProps, mapDispatchToProps)(InstanceList);
+const ProfileListConnected: any = connect<IState, IProperties, {}>(mapStateToProps, mapDispatchToProps)(ProfileList);
 
-export default withRouter(InstanceListConnected);
+export default withRouter(ProfileListConnected);

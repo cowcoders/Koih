@@ -26,6 +26,7 @@ class Sidebar extends React.Component<any, any> {
           <NavTitle>Elements</NavTitle>
           <NavGroupItem eventKey="/" glyph="home" text="Home"/>
           <NavGroupItem eventKey="/instance-list" glyph="monitor" text="Instances"/>
+          <NavGroupItem eventKey="/profile-list" glyph="user" text="Profiles"/>
         </NavGroup>
       </Pane>
     );

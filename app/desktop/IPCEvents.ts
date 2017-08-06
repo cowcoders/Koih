@@ -23,6 +23,12 @@ function searchInstances(event) {
     .catch(err => event.sender.send(IPCConstants.SEARCH_INSTANCES(true), err));
 }
 
+function getProfiles(event: any, database: Database) {
+  database.profiles.findAll()
+    .then(data => event.sender.send(IPCConstants.GET_PROFILES(true), null, data))
+    .catch(err => event.sender.send(IPCConstants.GET_PROFILES(true), err));
+}
+
 export default class IPCEvents {
   database: Database;
   config: Config;
@@ -37,5 +43,7 @@ export default class IPCEvents {
     ipcMain.on(IPCConstants.GET_INSTANCES(), event => getInstances(event, this.database));
     ipcMain.on(IPCConstants.NEW_INSTANCE(), (event, instance: InstanceModel) => newInstance(event, instance, this.database));
     ipcMain.on(IPCConstants.SEARCH_INSTANCES(), event => searchInstances(event));
+    //
+    ipcMain.on(IPCConstants.GET_PROFILES(), event => getProfiles(event, this.database));
   }
 }

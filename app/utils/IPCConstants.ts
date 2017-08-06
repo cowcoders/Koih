@@ -11,6 +11,10 @@ export default class IPCConstants {
     return IPCConstants.getCTE('aws:search:instances', reply);
   }
 
+  static GET_PROFILES(reply: boolean = false): string {
+    return IPCConstants.getCTE('db:get:profiles', reply);
+  }
+
   private static getCTE(name: string, reply: boolean) {
     return `ipc:${name}${reply ? ':reply' : ''}`;
   }
