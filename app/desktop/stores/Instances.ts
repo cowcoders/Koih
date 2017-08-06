@@ -1,4 +1,5 @@
 import * as DataStore from 'nedb';
+import InstanceModel from "../../models/InstanceModel";
 
 export default class Instances {
   private dataStore: DataStore;
@@ -10,6 +11,16 @@ export default class Instances {
   findAll() {
     return new Promise((resolve, reject) => {
       this.dataStore.find({}, (err, data) => {
+        if (err) reject(err);
+        else resolve(data);
+      });
+    });
+  }
+
+  insert(instance: InstanceModel) {
+    console.log('AAA');
+    return new Promise((resolve, reject) => {
+      this.dataStore.insert(instance, (err, data) => {
         if (err) reject(err);
         else resolve(data);
       });

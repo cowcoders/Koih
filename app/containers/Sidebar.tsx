@@ -17,6 +17,9 @@ class Sidebar extends React.Component<any, any> {
   onSelect(index) {
     console.log(`sidebar clicked with ${index}`);
     switch (index) {
+      case 0:
+        this.props.history.push('/');
+        break;
       case 1:
         this.props.history.push('/instance-list');
         break;
@@ -34,8 +37,9 @@ class Sidebar extends React.Component<any, any> {
   render() {
     return (
       <Pane ptSize="sm" sidebar>
-        <NavGroup activeKey={1} onSelect={this.onSelect}>
+        <NavGroup activeKey={0} onSelect={this.onSelect}>
           <NavTitle>nav group icon &amp; text</NavTitle>
+          <NavGroupItem eventKey={0} glyph="home" text="Home"/>
           <NavGroupItem eventKey={1} glyph="monitor" text="Instances"/>
           <NavGroupItem eventKey={2} glyph="user" text="Profiles"/>
           <NavGroupItem eventKey={3} glyph="key" text="Keys"/>

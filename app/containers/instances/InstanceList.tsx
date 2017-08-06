@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { connect } from "react-redux";
 import { Button } from "react-photonkit";
-// import { Pane } from 'react-photonkit';
 
-import { loadInstances } from '../../actions/instance';
+import { loadInstances, newInstance } from '../../actions/instance';
+import InstanceModel from "../../models/InstanceModel";
 
 let styles = require('./InstanceList.scss');
 
 interface IProperties {
   loadInstances: () => void,
+  newInstance: (instance: InstanceModel) => void,
   isLoading: boolean,
-  hasErrored: boolean
+  hasErrored: boolean,
+  instances: [InstanceModel]
 }
 
 interface IState {
@@ -24,15 +26,19 @@ class InstanceList extends React.Component<IProperties, IState> {
     this.test = this.test.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.loadInstances();
-  // }
-
-  test() {
+  componentDidMount() {
     this.props.loadInstances();
   }
 
+  test() {
+    const instance = new InstanceModel();
+    instance.id = 1;
+    instance.name = 'dummyInstnace';
+    this.props.newInstance(instance);
+  }
+
   render() {
+    const { instances } = this.props;
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
@@ -43,7 +49,7 @@ class InstanceList extends React.Component<IProperties, IState> {
 
     return (
       <div>
-        <Button onClick={this.test} glyph="home"/>
+        <Button onClick={this.test} glyph="plus"/>
         <table className={styles.tableStriped}>
           <thead>
             <tr>
@@ -53,21 +59,12 @@ class InstanceList extends React.Component<IProperties, IState> {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>photon.css</td>
-              <td>CSS</td>
-              <td>28K</td>
-            </tr>
-            <tr>
-              <td>photon.css</td>
-              <td>CSS</td>
-              <td>28K</td>
-            </tr>
-            <tr>
-              <td>photon.css</td>
-              <td>CSS</td>
-              <td>28K</td>
-            </tr>
+            {instances && instances.map(instance =>
+              <tr>
+                <td>{instance.id}</td>
+                <td>{instance.name}</td>
+              </tr>
+            )}
             ...
             <tr>
               <td>photon.css</td>
@@ -91,7 +88,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadInstances: () => dispatch(loadInstances())
+    loadInstances: () => dispatch(loadInstances()),
+    newInstance: (instance: InstanceModel) => dispatch(newInstance(instance))
   };
 };
 
