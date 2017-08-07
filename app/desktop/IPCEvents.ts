@@ -4,6 +4,7 @@ import Config from "./Config";
 import IPCConstants from "../utils/IPCConstants";
 import InstanceModel from "../models/InstanceModel";
 import { searchInstances as awsSearchInstances } from "./utils/aws";
+import ProfileModel from "../models/ProfileModel";
 
 function getInstances(event, database) {
   database.instances.findAll()
@@ -29,6 +30,12 @@ function getProfiles(event: any, database: Database) {
     .catch(err => event.sender.send(IPCConstants.GET_PROFILES(true), err));
 }
 
+function newProfile(event, profile: ProfileModel, database: Database) {
+  database.profiles.insert(profile)
+    .then(data => event.sender.send(IPCConstants.NEW_PROFILE(true), null, data))
+    .catch(err => event.sender.send(IPCConstants.NEW_PROFILE(true), err));
+}
+
 export default class IPCEvents {
   database: Database;
   config: Config;
@@ -45,5 +52,6 @@ export default class IPCEvents {
     ipcMain.on(IPCConstants.SEARCH_INSTANCES(), event => searchInstances(event));
     //
     ipcMain.on(IPCConstants.GET_PROFILES(), event => getProfiles(event, this.database));
+    ipcMain.on(IPCConstants.NEW_PROFILE(), (event, profile: ProfileModel) => newProfile(event, profile, this.database));
   }
 }

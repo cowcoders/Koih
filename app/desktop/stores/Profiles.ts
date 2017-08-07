@@ -1,4 +1,5 @@
 import * as DataStore from 'nedb';
+import * as uuidV1 from 'uuid/v1';
 import InstanceModel from "../../models/ProfileModel";
 
 export default class Profiles {
@@ -19,6 +20,8 @@ export default class Profiles {
 
   insert(instance: InstanceModel) {
     return new Promise((resolve, reject) => {
+      // Check instance ID
+      if (!instance.id) instance.id = uuidV1();
       this.dataStore.insert(instance, (err, data) => {
         if (err) reject(err);
         else resolve(data);

@@ -24,19 +24,20 @@ interface IState {
 class ProfileList extends React.Component<IProperties, IState> {
   constructor() {
     super();
-    this.goToSearchInstances = this.goToSearchInstances.bind(this);
+    this.goToNewProfile = this.goToNewProfile.bind(this);
   }
 
   componentDidMount() {
     this.props.loadProfiles();
   }
 
-  goToSearchInstances() {
-    this.props.history.push('/instance-search');
+  goToNewProfile() {
+    this.props.history.push('/profile-new');
   }
 
   render() {
     const { profiles } = this.props;
+    console.log('a', profiles);
     if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
@@ -49,15 +50,14 @@ class ProfileList extends React.Component<IProperties, IState> {
       <div>
         <Actionbar>
           <ButtonGroup>
-            <Button onClick={this.goToSearchInstances} glyph="search"/>
+            <Button onClick={this.goToNewProfile} glyph="plus"/>
           </ButtonGroup>
         </Actionbar>
         <table className={styles.tableStriped}>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Kind</th>
-              <th>File Size</th>
+              <th>Id</th>
+              <th>name</th>
             </tr>
           </thead>
           <tbody>
@@ -82,9 +82,9 @@ class ProfileList extends React.Component<IProperties, IState> {
 
 const mapStateToProps = (state) => {
   return {
-    instances: state.instance.instances,
-    hasErrored: state.instance.hasErrored,
-    isLoading: state.instance.isLoading
+    profiles: state.profile.profiles,
+    hasErrored: state.profile.hasErrored,
+    isLoading: state.profile.isLoading
   };
 };
 
