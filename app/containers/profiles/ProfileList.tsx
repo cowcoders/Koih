@@ -58,6 +58,7 @@ class ProfileList extends React.Component<IProperties, IState> {
             <tr>
               <th>Id</th>
               <th>name</th>
+              <th/>
             </tr>
           </thead>
           <tbody>
@@ -65,14 +66,12 @@ class ProfileList extends React.Component<IProperties, IState> {
               <tr key={profile.id}>
                 <td>{profile.id}</td>
                 <td>{profile.name}</td>
+                <td>
+                  <Button glyph="pencil"/>
+                  <Button glyph="trash" color="red"/>
+                </td>
               </tr>
             )}
-            ...
-            <tr>
-              <td>photon.css</td>
-              <td>CSS</td>
-              <td>28K</td>
-            </tr>
           </tbody>
         </table>
       </div>

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 // import { Button, Actionbar, ButtonGroup } from "react-photonkit";
 import { withRouter } from 'react-router-dom';
 
-import { newProfile } from '../../actions/profiles';
 import ProfileModel from "../../models/ProfileModel";
 import NewProfileForm from "../../components/profiles/NewProfileForm";
 
@@ -30,7 +29,7 @@ class NewProfile extends React.Component<IProperties, IState> {
 
   render() {
     return (
-      <NewProfileForm onSubmit={(instance) => this.onSubmitForm(instance)}/>
+      <NewProfileForm/>
     )
   }
 }
@@ -44,9 +43,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    newProfile: (profile) => dispatch(newProfile(profile))
-  };
+  return {};
 };
 
 const NewProfileConnected: any = connect<IState, IProperties, {}>(mapStateToProps, mapDispatchToProps)(NewProfile);
