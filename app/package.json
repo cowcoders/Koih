@@ -1,7 +1,7 @@
 {
   "name": "Koih",
   "productName": "Koih",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Desktop app to manage AWS instances",
   "main": "./main.js",
   "author": {
