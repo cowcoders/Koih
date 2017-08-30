@@ -45,7 +45,7 @@
     "test-all": "npm run test && npm run build && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js e2e",
     "test-watch": "npm test -- --watch",
-    "publish": "npm run build --win --mac --publish"
+    "publish": "electron-builder build --mac --publish always"
   },
   "dependencies": {
     "aws-sdk": "^2.94.0",
